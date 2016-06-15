@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head lang="en, fr">
+    <title>Application Wine-cave</title>
+
+    <!-- META -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="UTF-8">
+    <!-- META -->
+
+    <!-- CSS LINK -->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link rel="stylesheet" href="css/main.css" type="text/css"/>
+    <!-- CSS LINK -->
+
+    <!-- JQUERY LINK -->
+    <script src="cordova.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.mobile.custom.min.js"></script>
+    <!-- JQUERY LINK -->
+
+    <!-- JAVASCRIPT LINK -->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <!-- JAVASCRIPT LINK -->
+
+</head>
+
+
+<body>
+<header>
+    <nav class="teal lighten-2 navigation">
+        <a href="home.html" class="brand-logo center"></a>
+        <ul id="slide-out" class="side-nav">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="guide.html">Guide</a></li>
+            <li><a href="friends.html">Friends</a></li>
+            <li class="no-padding">
+                <ul class="collapsible collapsible-accordion">
+                    <li>
+                        <a class="collapsible-header">Vos fiches de vin<i class="mdi-navigation-arrow-drop-down"></i></a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a href="fichevinadd.html">Ajouter une fiche de vin</a></li>
+                                <li><a href="fichevinshow.html">Consulter vos fiches de vin</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="index.html">Sign out</a></li>
+        </ul>
+        <a href="home.html" class="brand-logo center"></a>
+        <ul class="left hide-on-med-and-down">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="guide.html">Guide</a></li>
+            <li><a href="friends.html">Friends</a></li>
+            <li><a class="dropdown-button" href="#!" data-activates="dropdown2">Vos fiches de vin<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
+            <ul id='dropdown2' class='dropdown-content'>
+                <li><a href="fichevinadd.html">Ajouter une fiche de vin</a></li>
+                <li><a href="fichevinshow.html">Consulter vos fiches de vin</a></li>
+            </ul>
+            <li><a href="index.html">Sign out</a></li>
+        </ul>
+
+        <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+
+    </nav>
+    <script> $(".button-collapse").sideNav();</script>
+</header>
+
+<div class="container main_teal_panel">
+<div class="row valign">
+    <div class="col s12" id="result"></div>
+
+    <div id="result_update"></div>
+</div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        // Permet de vérifier si on récupère le bon id de la bonne note
+        $button_update_access = localStorage.getItem('button_update_access');
+
+        var data = {
+            button_update_access: $button_update_access
+        };
+
+        // Envoi des données en AJAX
+        $.ajax({
+            type: "POST",
+            data: data,
+            url: "http://delphine-idiart.com/app-wine/php/fichevinupdate.php", //Fichier PHP pour la requête
+
+            success: function (data) {
+                if (data) {
+
+                    // Affiche la note selon l'id dans $button_update_access
+
+                    console.log(data);
+                    var note = data;
+
+                    var noti = [];
+                    $.each(note, function (key, val) {
+                        noti.push("<p class='pheadtextindex center'>"+ val['nom'] +" - "+ val['annee'] + " - " + val ['domaine'] + " - "+ val['vintype'] + "</p>" +
+                                "<label for='commentaire'></label><textarea id='commentaire' class='materialize-textarea text_update_width' length='120'>" + val['commentaire'] + "</textarea><br>" +
+                                "<label for='note'></label><textarea id='note' class='materialize-textarea text_update_width' length='120'>" + val['note'] + "</textarea>" +
+                                "<div class='btn-update' id=' "+ val['id'] +" '><a href='fichevinshow.html' class='waves-effect waves-light btn' >Mettre à jour votre fiche de vin</a></div>");
+                    });
+
+                    $("<div/>", {
+                        "class": "input-field col s12",
+                        html: noti.join("")
+                    }).appendTo("#result");
+
+                    console.log(noti);
+
+                    // BOUTON UPDATE
+                    $(".btn-update").click(function(){
+                        event.preventDefault();
+
+                        $button_update_access = localStorage.getItem('button_update_access');
+
+                        // Récupère les données
+                        var data ={
+                            // Données insérées dans le formulaire
+                            commentaire:$('#commentaire').val(),
+                            note: $('#note').val(),
+                            button_update_access: $button_update_access
+                        }; // Fin data
+
+                        // Vérifie si on prend les bonnes valeurs du formulaire
+                        console.log(data);
+
+                        $.ajax({
+                            type: "POST",
+                            data: data,
+                            url: "http://delphine-idiart.com/app-wine/php/fichevinupdate2.php", //Envoi des données AJAX Post sur cette page PHP
+
+                            success: function(data) {
+                                console.log(data);
+                                if(data){
+                                    $("#result_update").html("<p class='pheadtextindex center'>Votre fiche de vin a bien été modifiée</p> <p><a href='fichevinshow.html' class='waves-effect grey lighten-2 waves-light btn'> Revenir à mes fiches de vin !</a></p>");
+                                }else{
+                                    $("#result_update").html("<p class='pheadtextindex center'>Une erreur s'est produite. Votre fiche de vin n'a pas été modifiée </p>");
+                                }
+                            },
+                            error: function(statut){
+                                $('#result').html('error');
+                            }
+
+                        });
+
+                    }); /** FIN SUBMIT FONCTION **/
+
+                } else {
+                    $('#result').html('Id of note cannot be attr');
+                }
+            },
+            error: function (statut) {
+                console.log(statut);
+                alert('Request cannot be done');
+            }
+        });/* Fin AJAX */
+
+    });/* FIN DOCUMENT.READY */
+</script>
+
+</body>
+</html>

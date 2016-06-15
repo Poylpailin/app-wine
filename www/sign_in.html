@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head lang="en, fr">
+    <title>Application Money Reminder</title>
+
+    <!-- META -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="UTF-8">
+    <!-- META -->
+
+    <!-- CSS LINK -->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link rel="stylesheet" href="css/main.css" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile.custom.structure.min.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile.custom.theme.min.css">
+    <!-- CSS LINK -->
+
+    <!-- JQUERY LINK -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.mobile.custom.min.js"></script>
+    <!-- JQUERY LINK -->
+
+    <!-- JAVASCRIPT LINK -->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <!-- JAVASCRIPT LINK -->
+</head>
+
+<body>
+
+<div class="row valign">
+
+    <h3 class="h3headtextindex center-align">Inscription</h3>
+
+    <form action="" class="col s12" method="POST">
+
+        <div class="input-field col s12">
+            <i class="mdi-action-account-circle prefix"></i>
+            <input placeholder="Username" id="username" name="username" type="text" class="validate">
+            <label for="Username"></label>
+        </div>
+
+        <div class="input-field col s12">
+            <i class="mdi-communication-email prefix"></i>
+            <input placeholder="Email" id="email" name="email" type="text" class="validate">
+            <label for="email"></label>
+        </div>
+
+        <div class="input-field col s12">
+            <i class="mdi-action-https prefix"></i>
+            <input placeholder="Password" id="password" name="password" type="password" class="validate">
+            <label for="password"></label>
+        </div>
+
+        <button class="btn waves-effect waves-light" type="submit" id="submit" value="Inscription" name="action">Submit
+            <i class="mdi-content-send right"></i>
+        </button>
+
+
+    </form>
+
+    <p>&nbsp;</p> <!-- Ceci est un grand mystére -->
+
+    <div class="container">
+        <div class="card-panel teal lighten-2">
+            <a href="index.html">
+                <span class="white-text">Already registered? Sign in here.</span>
+            </a>
+        </div>
+    </div>
+
+    <div id="result"></div>
+
+
+    <!-- Le script s'active lors du clic sur le bouton -->
+    <script type="text/javascript">
+        $("#submit").click(function(){
+            // Désactive le comportement par défaut du navigateur qui consiste à appeler la page action du formulaire
+            event.preventDefault();
+
+            // Récupère les données
+            var data ={
+                username : $('#username').val(),
+                email : $('#email').val(),
+                password :$('#password').val()
+
+            };
+
+            // Envoi des données en AJAX
+            $.ajax({
+                type: "POST",
+                data: data,
+                url: "http://delphine-idiart.com/app-wine/php/inscription.php", //Envoi des données AJAX Post sur cette page PHP
+
+                success: function(data) {
+                    console.log(data);
+                    if(data){
+                        $("#result").html("<div class='card-panel teal lighten-2'><span class='white-text'>Your account has been successfully created. Heading back to the connexion-page. Please wait..</span></div>");
+                        window.setTimeout(function(){
+                            window.location.href = "index.html";
+                        }, 2000);
+                    }else{
+                        $('#result').html('une erreur s\'est produite');
+                    }
+                },
+                error: function(statut) {
+                    console.log(statut);
+                    alert('Error, request cannot be made')}
+            });
+            /** FIN $.AJAX **/
+
+            return false;
+        });/** FIN SCRIPT **/
+    </script>
+
+
+
+
+
+</div><!-- FIN ROW -->
+
+</body>
+
+</html>

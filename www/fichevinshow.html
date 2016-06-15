@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head lang="en, fr">
+    <title>Application Wine-cave</title>
+
+    <!-- META -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="UTF-8">
+    <!-- META -->
+
+    <!-- CSS LINK -->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link rel="stylesheet" href="css/main.css" type="text/css"/>
+    <!-- CSS LINK -->
+
+    <!-- JQUERY LINK -->
+    <script src="cordova.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.mobile.custom.min.js"></script>
+    <!-- JQUERY LINK -->
+
+    <!-- JAVASCRIPT LINK -->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <!-- JAVASCRIPT LINK -->
+
+</head>
+
+
+<body>
+<header>
+    <nav class="teal lighten-2 navigation">
+        <a href="home.html" class="brand-logo center"></a>
+        <ul id="slide-out" class="side-nav">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="guide.html">Guide</a></li>
+            <li><a href="friends.html">Friends</a></li>
+            <li class="no-padding">
+                <ul class="collapsible collapsible-accordion">
+                    <li>
+                        <a class="collapsible-header">Vos fiches de vin<i class="mdi-navigation-arrow-drop-down"></i></a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a href="fichevinadd.html">Ajouter une fiche de vin</a></li>
+                                <li><a href="fichevinshow.html">Consulter vos fiches de vin</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="index.html">Sign out</a></li>
+        </ul>
+        <a href="home.html" class="brand-logo center"></a>
+        <ul class="left hide-on-med-and-down">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="guide.html">Guide</a></li>
+            <li><a href="friends.html">Friends</a></li>
+            <li><a class="dropdown-button" href="#!" data-activates="dropdown2">Vos fiches de vin<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
+            <ul id='dropdown2' class='dropdown-content'>
+                <li><a href="fichevinadd.html">Ajouter une fiche de vin</a></li>
+                <li><a href="fichevinshow.html">Consulter vos fiches de vin</a></li>
+            </ul>
+            <li><a href="index.html">Sign out</a></li>
+        </ul>
+
+        <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+
+    </nav>
+    <script> $(".button-collapse").sideNav();</script>
+</header>
+
+
+<div class="container main_teal_panel">
+    <h3 class="h3headtextindex center">Vos fiches de vin</h3>
+
+    <!-- Récupère tous les résultats de la requête pour afficher toutes les notes liées à l'utilisateur -->
+    <div id="result" class="col s12"></div>
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $user_id = localStorage.getItem('id');
+
+        var data ={
+            user_id: $user_id
+        };
+
+        $.ajax({
+            type: "POST",
+            data: data,
+            url: "http://delphine-idiart.com/app-wine/php/fichevin.php", //Fichier PHP pour la requête
+
+            success: function (data) {
+                if (data) {
+
+                    console.log(data);
+                    var note = data;
+                    console.log(note);
+
+                    var noti = [];
+                    $.each(note, function (key, val) {
+                        noti.push("<div class='main_teal_cards card-panel teal lighten-2 id='" + val['id'] + "'><span class='card-title'>" + val['nom'] + "</span><p>" +val['domaine']+ "</p>" +
+                                "<strong class='coloredtext_panel'><p>" + val['annee'] +" - "+ val['vintype']+ "-" +val['commentaire']+ "-" + val['note'] +
+                                "<br></p></strong><img src='" + val['image'] +"'><br><div class='btn-update-access' id=' "+ val['id'] +" '><a class='waves-effect waves-light btn' href='fichevinupdate.html'>Update</a></div>" +
+                                "<br><div class='btn-delete' id='"+val['id']+"'><a class='btn-floating btn-tiny waves-effect waves-light red'><i class='mdi-content-clear'></i></a></div>" +
+                                " <div id='statut_maj'></div></img>");
+                    });
+
+                    $("<div/>", {
+                        "class": "card teal lighten-5",
+                        html: noti.join("")
+                    }).appendTo("#result");
+
+                    console.log(noti);
+
+                    // Action du bouton update - enregistre l'id pour qu'il puisse afficher la bonne note dans la page suivante
+                    $(".btn-update-access").click(function() {
+                        var button_update_access = $(this).attr("id");
+                        localStorage.setItem('button_update_access',button_update_access);
+                    });
+
+                    // Action pour le bouton delete
+                    $(".btn-delete").click(function(){
+
+                        // Récupère l'id de la note
+                        $button_delete = $(this).attr("id");
+
+                        var data = {
+                            button_delete: $button_delete
+                        };
+
+                        console.log(data);
+
+                        // Action vers la page PHP
+                        $.ajax({
+                            type: "POST",
+                            data: data,
+                            url: "http://delphine-idiart.com/app-wine/php/fichevindelete.php", //Envoi des données AJAX Post sur cette page PHP
+
+                            success: function(data) {
+                                $("#statut_maj").html("Successfully deleted!");
+                                window.setTimeout(function(){
+                                    location.reload(true);
+                                }, 2000);
+                            },
+                            error: function(statut){
+                                $('#statut_maj').html('Error');
+                            }
+
+                        });
+                    });
+
+                } else {
+                    $('#result').html('No note has been share with you! :( ');
+                }
+            },
+            error: function (statut) {
+                console.log(statut);
+                alert('Request cannot be done');
+            }
+        });
+        /** FIN $.AJAX **/
+    });
+</script>
+
+</body>
+</html>

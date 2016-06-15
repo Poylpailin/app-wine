@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head lang="en, fr">
+    <title>Application Wine-cave</title>
+
+    <!-- META -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="UTF-8">
+    <!-- META -->
+
+    <!-- CSS LINK -->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link rel="stylesheet" href="css/main.css" type="text/css"/>
+    <!-- CSS LINK -->
+
+    <!-- JQUERY LINK -->
+    <script src="cordova.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.mobile.custom.min.js"></script>
+    <!-- JQUERY LINK -->
+
+    <!-- JAVASCRIPT LINK -->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <!-- JAVASCRIPT LINK -->
+
+</head>
+
+
+<body>
+<header>
+    <nav class="teal lighten-2 navigation">
+        <a href="home.html" class="brand-logo center"></a>
+        <ul id="slide-out" class="side-nav">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="guide.html">Guide</a></li>
+            <li><a href="friends.html">Friends</a></li>
+            <li class="no-padding">
+                <ul class="collapsible collapsible-accordion">
+                    <li>
+                        <a class="collapsible-header">Vos fiches de vin<i class="mdi-navigation-arrow-drop-down"></i></a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a href="fichevinadd.html">Ajouter une fiche de vin</a></li>
+                                <li><a href="fichevinshow.html">Consulter vos fiches de vin</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="index.html">Sign out</a></li>
+        </ul>
+        <a href="home.html" class="brand-logo center"></a>
+        <ul class="left hide-on-med-and-down">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="guide.html">Guide</a></li>
+            <li><a href="friends.html">Friends</a></li>
+            <li><a class="dropdown-button" href="#!" data-activates="dropdown2">Vos fiches de vin<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
+            <ul id='dropdown2' class='dropdown-content'>
+                <li><a href="fichevinadd.html">Ajouter une fiche de vin</a></li>
+                <li><a href="fichevinshow.html">Consulter vos fiches de vin</a></li>
+            </ul>
+            <li><a href="index.html">Sign out</a></li>
+        </ul>
+
+        <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+
+    </nav>
+    <script> $(".button-collapse").sideNav();</script>
+</header>
+
+<h3 class="h3headtextindex center">Partager une fiche de notation de vin</h3>
+
+<div class="row valign">
+
+    <form action="" id="" class="col s12" method="POST">
+
+        <!-- PHOTO DU VIN -->
+        <div class="input-field col s12">
+            <button id="capturePhoto">Prendre une photo</button><br>
+            <button id="captureImage">Choisir une photo</button><br>
+            <img style="display:none;width:100px;height:100px;" id="smallImage" src="" />
+        </div>
+
+        <!-- NOM DU VIN -->
+        <div class="input-field col s12">
+            <i class="mdi-communication-live-help prefix changedcolour"></i>
+            <input type="text" name="nom" placeholder="Nom du vin" id="nom" class="validate">
+            <label for="nom"></label>
+        </div>
+
+        <!-- DOMAINE DU VIN -->
+        <div class="input-field col s12">
+            <i class="mdi-communication-live-help prefix changedcolour"></i>
+            <input type="text" name="domaine" placeholder="Domaine de vin" id="domaine" class="validate">
+            <label for="domaine"></label>
+        </div>
+
+        <!-- ANNEE DU VIN -->
+        <div class="input-field col s12">
+            <i class="mdi-communication-live-help prefix changedcolour"></i>
+            <input type="text" name="annee" placeholder="Année du vin" id="annee" class="validate">
+            <label for="annee"></label>
+        </div>
+
+        <!-- TYPE DU VIN -->
+        <div class="input-field col s12">
+            <i class="mdi-communication-live-help prefix changedcolour"></i>
+            <input type="text" name="vintype" placeholder="Type du vin" id="vintype" class="validate">
+            <label for="vintype"></label>
+        </div>
+
+        <!-- COMMENTAIRE DU VIN -->
+        <div class="input-field col s12">
+            <i class="mdi-communication-email prefix changedcolour"></i>
+            <textarea id="commentaire" class="materialize-textarea" placeholder="Commentaire" length="120"></textarea>
+            <label for="commentaire"></label>
+        </div>
+
+        <!-- NOTE DU VIN -->
+        <div class="input-field col s12">
+            <i class="mdi-communication-live-help prefix changedcolour"></i>
+            <input type="text" name="note" placeholder="Note du vin" id="note" class="validate">
+            <label for="note"></label>
+        </div>
+
+        <!-- SUIVANT -->
+        <div class="col s12">
+            <br>
+            <button class="btn waves-effect waves-light" type="submit" id="submit" name="action">GO !
+                <i class="mdi-content-send right"></i>
+            </button>
+        </div>
+
+        <br>
+
+        <!-- AFFICHE LE RESULTAT DE LA REQUETE - DONC AU RETOUR DE LA CREATION DANS LA BASE DE DONNEES -->
+        <div id="result">
+        </div>
+    </form>
+</div>
+
+<!-- Récupération de la liste ami -->
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $("#capturePhoto").click(function(){
+            event.preventDefault();
+
+            navigator.camera.getPicture(cameraSuccess, cameraError, {
+                quality: 50,
+                destinationType: Camera.DestinationType.DATA_URL,
+                sourceType: Camera.PictureSourceType.CAMERA,
+                encodingType: Camera.EncodingType.JPEG,
+                mediaType: Camera.MediaType.PICTURE,
+                allowEdit: true,
+                correctOrientation: true
+            });
+
+            function cameraSuccess(imageData) {
+                var image = "data:image/jpeg;base64," + imageData;
+                console.log (image);
+                localStorage.setItem('image-wine',image);
+                var smallImage = document.getElementById('smallImage');
+                smallImage.style.display = 'block';
+                smallImage.src = image;
+            }
+
+            function cameraError() {
+                alert('Failed');
+            }
+        });
+
+        $("#captureImage").click(function(){
+            event.preventDefault();
+
+            navigator.camera.getPicture(cameraSuccess, cameraError, {
+                quality: 50,
+                destinationType: Camera.DestinationType.DATA_URL,
+                sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                encodingType: Camera.EncodingType.JPEG,
+                allowEdit: true,
+                correctOrientation: true
+            });
+
+            function cameraSuccess(imageData) {
+                var image = "data:image/jpeg;base64," + imageData;
+                console.log (image);
+                localStorage.setItem('image-wine',image);
+                var smallImage = document.getElementById('smallImage');
+                smallImage.style.display = 'block';
+                smallImage.src = image;
+            }
+
+            function cameraError() {
+                alert('Failed');
+            }
+        });
+
+        $("#submit").click(function(){
+            event.preventDefault();
+
+            $user_id = localStorage.getItem('id');
+            $user_username = localStorage.getItem('username');
+            $image = localStorage.getItem('image-wine');
+
+            // Récupère les données
+            var data ={
+                // Données insérées dans le formulaire
+                nom:$('#nom').val(),
+                domaine:$('#domaine').val(),
+                annee:$('#annee').val(),
+                vintype:$('#vintype').val(),
+                commentaire:$('#commentaire').val(),
+                note:$('#note').val(),
+
+                // Données de la session en cours
+                user_id: $user_id,
+                user_username: $user_username,
+                image: $image
+
+            }; // Fin data
+
+            console.log(data);
+
+            $.ajax({
+
+                type: "POST",
+                data: data,
+                url: "http://www.delphine-idiart.com/app-wine/php/addwine.php", //Envoi des données AJAX Post sur cette page PHP
+
+            success: function(data) {
+                 if(data){
+                    // Vérifie si on prend les bonnes valeurs du formulaire
+                    console.log(data);
+                     $("#result").html("Votre fiche de vin a été créée");
+                     localStorage.removeItem("image-wine");
+                 }else{
+                     console.log(data);
+                    $("#result").html("Erreur de la fonction");
+                 }
+            },
+
+            error: function(statut){
+                $('#result').html('Error');
+            }
+
+            }); /* Fin AJAX */
+
+        }); /** FIN SUBMIT FONCTION **/
+
+        return false;
+
+    });/** FIN DOC **/
+</script>
+
+</body>
+</html>

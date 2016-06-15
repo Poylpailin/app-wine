@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head lang="en, fr">
+    <title>Application Wine-cave</title>
+
+    <!-- META -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="UTF-8">
+    <!-- META -->
+
+    <!-- CSS LINK -->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link rel="stylesheet" href="css/main.css" type="text/css"/>
+    <!-- CSS LINK -->
+
+    <!-- JQUERY LINK -->
+    <script src="cordova.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.mobile.custom.min.js"></script>
+    <!-- JQUERY LINK -->
+
+    <!-- JAVASCRIPT LINK -->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <!-- JAVASCRIPT LINK -->
+
+</head>
+
+
+<body>
+<!-- Si erreur -->
+<div id="resultat"></div>
+
+<!-- Si non connecté -->
+<div id="formulaire_connexion">
+    <h3 class="h3headtextindex center-align">Connexion</h3>
+    <form action="" class="col s12" method="POST">
+
+        <div class="input-field col s12">
+            <i class="mdi-action-account-circle prefix"></i>
+            <input placeholder="Username" name="username" id="username" type="text">
+            <label for="Username"></label>
+        </div>
+
+        <div class="input-field col s12">
+            <i class="mdi-communication-email prefix"></i>
+            <input placeholder="Password" name="password" id="password" type="password">
+            <label for="password"></label>
+        </div>
+
+        <button class="btn waves-effect waves-light" type="submit" id="submit" value="Connexion" name="action">Submit
+            <i class="mdi-content-send right"></i>
+        </button>
+
+    </form>
+</div>
+
+<div class="container">
+    <div class="card-panel teal lighten-2">
+        <a href="sign_in.html">
+            <span class="white-text">Not register yet ? Create your account here.</span>
+        </a>
+    </div>
+</div>
+
+<div id="home">
+</div>
+
+<script type="text/javascript">
+    $("#submit").click(function(){
+        // Désactive le comportement par défaut du navigateur qui consiste à appeler la page action du formulaire
+        event.preventDefault();
+
+        // Récupère les données
+        var data ={
+            username : $('#username').val(),
+            password :$('#password').val()
+        };
+
+        // Envoi des données en AJAX
+        $.ajax({
+            type: "POST",
+            data: data,
+            url: "http://delphine-idiart.com/app-wine/php/connexion.php", //Envoi des données AJAX Post sur cette page PHP
+
+            success: function(data) {
+                if(data){
+
+                    console.log(data);
+
+                    // (clé, valeur de la clé)
+                    localStorage.setItem('id',data.id);
+                    localStorage.setItem('username', data.username);
+
+                    var session_name = localStorage.getItem('username');
+                    console.log(session_name);
+
+                    $("#home").html("<div class='card-panel teal lighten-2'><span class='white-text'>Successfully connected! Heading back to the home-page. Please wait...</span></div>");
+
+                    window.setTimeout(function(){
+                        window.location.href = "home.html";
+                    }, 2000);
+
+                }else{
+                    $('#resultat').html('error!');
+                }
+            },
+            error: function(statut) {
+                console.log(statut);
+                alert('Wrong username or/and password');
+            }
+
+        });
+        /** FIN $.AJAX **/
+
+        return false;
+    });/** FIN SCRIPT **/
+</script>
+
+
+</body>
+</html>

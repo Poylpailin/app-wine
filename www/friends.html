@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head lang="en, fr">
+    <title>Application Wine-cave</title>
+
+    <!-- META -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="UTF-8">
+    <!-- META -->
+
+    <!-- CSS LINK -->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link rel="stylesheet" href="css/main.css" type="text/css"/>
+    <!-- CSS LINK -->
+
+    <!-- JQUERY LINK -->
+    <script src="cordova.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.mobile.custom.min.js"></script>
+    <!-- JQUERY LINK -->
+
+    <!-- JAVASCRIPT LINK -->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <!-- JAVASCRIPT LINK -->
+
+</head>
+
+
+<body>
+<header>
+    <nav class="teal lighten-2 navigation">
+        <a href="home.html" class="brand-logo center"></a>
+        <ul id="slide-out" class="side-nav">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="guide.html">Guide</a></li>
+            <li><a href="friends.html">Friends</a></li>
+            <li class="no-padding">
+                <ul class="collapsible collapsible-accordion">
+                    <li>
+                        <a class="collapsible-header">Note<i class="mdi-navigation-arrow-drop-down"></i></a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a href="fichevinadd.html">Add note</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="index.html">Sign out</a></li>
+        </ul>
+        <a href="home.html" class="brand-logo center"></a>
+        <ul class="left hide-on-med-and-down">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="guide.html">Guide</a></li>
+            <li><a href="friends.html">Friends</a></li>
+            <li><a class="dropdown-button" href="#!" data-activates="dropdown2">Vos fiches de vin<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
+            <ul id='dropdown2' class='dropdown-content'>
+                <li><a href="fichevinadd.html">Ajouter une fiche de vin</a></li>
+                <li><a href="fichevinshow.html">Consulter vos fiches de vin</a></li>
+            </ul>
+            <li><a href="index.html">Sign out</a></li>
+        </ul>
+
+        <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+
+    </nav>
+    <script> $(".button-collapse").sideNav();</script>
+</header>
+
+
+    <script type="text/javascript">
+         $(document).ready(function() {
+        
+            // Envoi des données en AJAX 
+            $.ajax({
+            type: "GET", 
+            url: "http://delphine-idiart.com/app-wine/php/show_friends.php", //Fichier PHP pour la requête
+
+            success: function(data) {
+                if(data){
+                    console.log(data);
+
+                    $.getJSON( "http://delphine-idiart.com/app-wine/php/show_friends.php", function(data) {
+                        var users = [];
+                        $.each( data, function( key, val ) {
+                        users.push( "<li class='main_teal_cards card-panel teal lighten-2 z-depth-1' id='" + key + "'>" + val['username'] + "<br>" +
+                                "<div class='btn-show-fichevinfriend' id=' "+ val['id'] +" '><a class='waves-effect waves-light btn' href='fichevinshow_friend.html'>Voir ses fiches de vin </a></div>" +
+                                "<div class='btn-update-access' id=' "+ val['id'] +" '><a class='waves-effect waves-light btn' href='cavevinshow_friend.html'>Voir sa cave à vin </a></div>" +);
+                        });
+                         
+                        $( "<ul/>", {
+                            "class": "list-friends",
+                            html: users.join( "" )
+                          }).appendTo( "#result" );console.log(users);
+
+                        });
+
+                    $(".btn-show-fichevinfriend").click(function() {
+                        var button_show_fichevinfriend = $(this).attr("id");
+                        localStorage.setItem('button_show_fichevinfriend',button_show_fichevinfriend);
+                    });
+
+               }else{
+                    $('#result').html('une erreur s\'est produite');
+               }
+            },
+            error: function(statut) {
+              console.log(statut);
+              alert('La requête n\'a pas abouti'); }
+            }); 
+            /** FIN $.AJAX **/
+
+              return false;
+
+        });/** FIN SCRIPT **/
+    </script>
+
+    <div id="result">
+        <h3 class="h3headtextindex center">Your friends</h3>
+    </div>
+
+</body>
+
+</html>

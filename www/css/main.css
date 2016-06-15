@@ -1,0 +1,184 @@
+@font-face {
+    font-family: Kankin;
+    src: url("../font/kankin/Kankin.otf");
+    src: url("../font/kankin/Kankin.ttf");
+}
+
+@font-face {
+    font-family: Langdon;
+    src: url("../font/langdon/Langdon.otf");
+}
+
+@font-face {
+    font-family: Manteka;
+    src: url("../font/manteka/manteka.ttf");
+}
+
+
+.invitepartner {
+    margin-top: 50px;
+    margin-bottom:  50px;
+}
+
+header {
+    margin-bottom: 30px;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main{
+    flex: 1 0 auto;
+}
+
+#result li{
+    text-align: center;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+#formulaire_connexion{
+    padding: 5%;
+}
+
+.paddinged{
+    margin-left: 5px;
+}
+
+/* BENJAMIN CSS */
+
+.navigation {
+    font-family: Kankin,Roboto;
+    box-shadow: none;
+}
+
+header {
+    margin-bottom: 0px;
+}
+
+.logohome{
+    background-color: #4db6ac;
+    font-family: Kankin,Roboto;
+    height: 100%;
+    color: white;
+    padding-bottom: 25px;
+    padding-top: 25px;
+}
+
+.dropdown-content {
+    width: 200px!important;
+}
+
+
+/* INDEX PAGE */
+
+body {
+    background-color:#FFFFFF;
+    text-align: center;
+}
+
+.h3headtextindex {
+    font-family: Kankin,Roboto;
+    color: #004c4c;
+    font-size: 35px;
+}
+
+/* HOME PAGE */
+
+.home_reminder_text {
+    font-family: Kankin,Roboto;
+    color: white;
+    font-size: 25px;
+}
+
+.logohome{
+height: 350px;
+}
+
+.homeusername {
+    margin: 0;
+    border-radius: 0px;
+    font-family: Kankin,Roboto;
+    text-align: center;
+    color: white;
+    font-size: 31px;
+}
+
+.godown{
+    margin: 0;
+    border-radius: 0px;
+    padding-top: 22px;
+}
+/* INSCRIPTION PAGE */
+
+/* FRIENDS PAGE */
+
+.friendcards{
+    box-shadow: none;
+    font-family: Kankin;
+    color: #FFFFFF;
+    font-size: 1.5em;
+}
+
+/* ADD PAGE */
+
+.changedcolour {
+    color: #4db6ac;
+}
+
+.changedcolourinvite {
+    color: #4db6ac;
+    font-family: Kankin,Roboto;
+}
+
+/* REQUEST PAGE */
+
+
+
+#statut_maj {
+    font-family: Kankin,Roboto;
+    color: white;
+}
+
+#backgroundedblue{
+    background-color: #4db6ac;
+    height: 100%;
+}
+
+/* UPDATE PAGE */
+
+.text_update_width{
+    width: 90%!important;
+}
+
+
+/* GLOBAL CSS -> CARD PANEL*/
+
+.main_teal_panel {
+    width: 95%!important;
+
+}
+.main_teal_cards {
+    font-family: Kankin,Roboto;
+    color: white;
+    margin-top: 10px;
+    box-shadow: none;
+}
+
+.coloredtext_panel {
+    color: #dedede;
+}
+
+.pheadtextindex {
+    font-family: Kankin,Roboto;
+    color: #4db6ac;
+    font-size: 20px;
+}
+
+.colored_txt_guide{
+    color: #004c4c;
+}
+
