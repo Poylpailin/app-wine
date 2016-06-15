@@ -87,20 +87,29 @@
                         $.each( data, function( key, val ) {
                         users.push( "<li class='main_teal_cards card-panel teal lighten-2 z-depth-1' id='" + key + "'>" + val['username'] + "<br>" +
                                 "<div class='btn-show-fichevinfriend' id=' "+ val['id'] +" '><a class='waves-effect waves-light btn' href='fichevinshow_friend.html'>Voir ses fiches de vin </a></div>" +
-                                "<div class='btn-update-access' id=' "+ val['id'] +" '><a class='waves-effect waves-light btn' href='cavevinshow_friend.html'>Voir sa cave à vin </a></div>" +);
-                        });
+                                "<div class='btn-update-access' id='"+ val['id'] + "'>" +
+                                "<div class='btn-show-cavevinfriend' id='"+ val['id'] +"'><a class='waves-effect waves-light btn' href='cavevinshow_friend.html'>Voir sa cave à vin </a></div>" +
+                                "</div>"
+                        )});
                          
                         $( "<ul/>", {
                             "class": "list-friends",
                             html: users.join( "" )
-                          }).appendTo( "#result" );console.log(users);
+                          }).appendTo( "#result" );
 
+                        console.log(users);
+
+                        $(".btn-show-fichevinfriend").click(function() {
+                            var button_show_fichevinfriend = $(this).attr("id");
+                            localStorage.setItem('button_show_fichevinfriend',button_show_fichevinfriend);
                         });
 
-                    $(".btn-show-fichevinfriend").click(function() {
-                        var button_show_fichevinfriend = $(this).attr("id");
-                        localStorage.setItem('button_show_fichevinfriend',button_show_fichevinfriend);
-                    });
+                        $(".btn-show-cavevinfriend").click(function() {
+                            var button_show_cavevinfriend = $(this).attr("id");
+                            localStorage.setItem('button_show_cavevinfriend',button_show_cavevinfriend);
+                        });
+
+                        });
 
                }else{
                     $('#result').html('une erreur s\'est produite');

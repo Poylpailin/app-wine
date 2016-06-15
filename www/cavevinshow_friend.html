@@ -72,14 +72,7 @@
 
 
 <div class="container main_teal_panel">
-
-    <div id="fiche_vin" class="h3headtextindex center"></div>
-
-    <script type="text/javascript">
-        var texte = "Fiches de vin de ";
-        var session_name = localStorage.getItem('username');
-        document.getElementById("fiche_vin").innerHTML = texte + session_name;
-    </script>
+    <h3 class="h3headtextindex center">Cave à vin de </h3>
 
     <!-- Récupère tous les résultats de la requête pour afficher toutes les notes liées à l'utilisateur -->
     <div id="result" class="col s12"></div>
@@ -89,7 +82,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        $button_show_fichevinfriend = localStorage.getItem('button_show_fichevinfriend');
+        $button_show_fichevinfriend = localStorage.getItem('button_show_cavevinfriend');
 
         var data ={
             button_show_fichevinfriend: $button_show_fichevinfriend
@@ -98,7 +91,7 @@
         $.ajax({
             type: "POST",
             data: data,
-            url: "http://delphine-idiart.com/app-wine/php/fichevin_friend.php", //Fichier PHP pour la requête
+            url: "http://delphine-idiart.com/app-wine/php/cavevin_friend.php", //Fichier PHP pour la requête
 
             success: function (data) {
                 if (data) {
@@ -122,7 +115,7 @@
                     console.log(noti);
 
                 } else {
-                    $('#result').html('Aucune fiche de vin !');
+                    $('#result').html('Pas de cave de vin !');
                 }
             },
             error: function (statut) {
