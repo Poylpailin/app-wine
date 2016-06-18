@@ -60,7 +60,7 @@ header {
 }
 
 .logohome{
-    background-color: #4db6ac;
+    background-color: #ec6868;
     font-family: Kankin,Roboto;
     height: 100%;
     color: white;
@@ -126,11 +126,11 @@ height: 350px;
 /* ADD PAGE */
 
 .changedcolour {
-    color: #4db6ac;
+    color: #ec6868;
 }
 
 .changedcolourinvite {
-    color: #4db6ac;
+    color: #ec6868;
     font-family: Kankin,Roboto;
 }
 
@@ -144,7 +144,7 @@ height: 350px;
 }
 
 #backgroundedblue{
-    background-color: #4db6ac;
+    background-color: #ec6868;
     height: 100%;
 }
 
@@ -174,7 +174,7 @@ height: 350px;
 
 .pheadtextindex {
     font-family: Kankin,Roboto;
-    color: #4db6ac;
+    color: #ec6868;
     font-size: 20px;
 }
 
