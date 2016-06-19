@@ -91,101 +91,60 @@
 </header>
 
 <div class="container main_teal_panel">
-<div class="row valign">
-    <div class="col s12" id="result"></div>
 
-    <div id="result_update"></div>
-</div>
+    <br><a href='fichevinshow.html' class='btn'> Mettez à jour vos fiches de vin!</a><br>
+    <div id="fiche_vin" class="h3headtextindex center">Flux actualité</div>
+    <br>
+
+    <!-- Récupère tous les résultats de la requête pour afficher toutes les notes liées à l'utilisateur -->
+    <div id="result" class="col s12"></div>
+
 </div>
 
 <script type="text/javascript">
     $(document).ready(function () {
 
-        // Permet de vérifier si on récupère le bon id de la bonne note
-        $button_update_access = localStorage.getItem('button_update_access');
-
-        var data = {
-            button_update_access: $button_update_access
-        };
-
-        // Envoi des données en AJAX
         $.ajax({
-            type: "POST",
-            data: data,
-            url: "http://delphine-idiart.com/app-wine/php/fichevinupdate.php", //Fichier PHP pour la requête
+            type: "GET",
+            url: "http://delphine-idiart.com/app-wine/php/flux_decouverte.php", //Fichier PHP pour la requête
 
             success: function (data) {
                 if (data) {
 
-                    // Affiche la note selon l'id dans $button_update_access
-
                     console.log(data);
                     var note = data;
+                    console.log(note);
 
                     var noti = [];
                     $.each(note, function (key, val) {
-                        noti.push("<p class='pheadtextindex center'>"+ val['nom'] +" - "+ val['annee'] + " - " + val ['domaine'] + " - "+ val['vintype'] + "</p>" +
-                                "<label for='commentaire'></label><textarea id='commentaire' class='materialize-textarea text_update_width' length='120'>" + val['commentaire'] + "</textarea><br>" +
-                                "<label for='note'></label><textarea id='note' class='materialize-textarea text_update_width' length='120'>" + val['note'] + "</textarea>" +
-                                "<div class='btn-update' id=' "+ val['id'] +" '><a href='fichevinshow.html' class='waves-effect waves-light btn' >Mettre à jour votre fiche de vin</a></div>");
+                        noti.push("<div class='card id='" + val['id'] + "'>" +
+                                "<div class='card-image'><img height=300 class='center' src='" + val['image'] +"'></div>" +
+                                "<span class='card-title'>" + val['nom'] + "</span>" +
+                                "<p>" +val['domaine']+ " - " + val['annee'] + " - "+ val['vintype']+ "</p>" +
+                                "<p>" +val['commentaire']+ "<p>" +
+                                "<p>NOTATION : " + val['note'] + "</p>"+
+                                "<p>Par "+ val['user_username'] + "</p>"+
+                                "</div>");
                     });
 
                     $("<div/>", {
-                        "class": "input-field col s12",
+                        "class": "col s12",
                         html: noti.join("")
                     }).appendTo("#result");
 
                     console.log(noti);
 
-                    // BOUTON UPDATE
-                    $(".btn-update").click(function(){
-                        event.preventDefault();
-
-                        $button_update_access = localStorage.getItem('button_update_access');
-
-                        // Récupère les données
-                        var data ={
-                            // Données insérées dans le formulaire
-                            commentaire:$('#commentaire').val(),
-                            note: $('#note').val(),
-                            button_update_access: $button_update_access
-                        }; // Fin data
-
-                        // Vérifie si on prend les bonnes valeurs du formulaire
-                        console.log(data);
-
-                        $.ajax({
-                            type: "POST",
-                            data: data,
-                            url: "http://delphine-idiart.com/app-wine/php/fichevinupdate2.php", //Envoi des données AJAX Post sur cette page PHP
-
-                            success: function(data) {
-                                console.log(data);
-                                if(data){
-                                    $("#result_update").html("<p class='pheadtextindex center'>Votre fiche de vin a bien été modifiée</p> <p><a href='fichevinshow.html' class='waves-effect grey lighten-2 waves-light btn'> Revenir à mes fiches de vin !</a></p>");
-                                }else{
-                                    $("#result_update").html("<p class='pheadtextindex center'>Une erreur s'est produite. Votre fiche de vin n'a pas été modifiée </p>");
-                                }
-                            },
-                            error: function(statut){
-                                $('#result').html('error');
-                            }
-
-                        });
-
-                    }); /** FIN SUBMIT FONCTION **/
-
                 } else {
-                    $('#result').html('Id of note cannot be attr');
+                    $('#result').html('Aucune fiche de vin !');
                 }
             },
             error: function (statut) {
                 console.log(statut);
                 alert('Request cannot be done');
             }
-        });/* Fin AJAX */
-
-    });/* FIN DOCUMENT.READY */
+        });
+        /** FIN $.AJAX **/
+    });
 </script>
 
 </body>
