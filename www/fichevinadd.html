@@ -88,58 +88,57 @@
     <script> $(".button-collapse").sideNav();</script>
 </header>
 
-<h3 class="h3headtextindex center">Partager une fiche de notation de vin</h3>
+<h3 class="h3headtextindex center">Partager <br>une fiche de notation de vin</h3>
 
 <div class="row valign">
 
     <form action="" id="" class="col s12" method="POST">
 
         <!-- PHOTO DU VIN -->
+        <div class="input-field col s6">
+            <button class="btn" id="capturePhoto">Depuis appareil</button>
+            </div>
+        <div class="input-field col s6">
+            <button class="btn" id="captureImage">Depuis album</button>
+        </div>
+
         <div class="input-field col s12">
-            <button id="capturePhoto">Prendre une photo</button><br>
-            <button id="captureImage">Choisir une photo</button><br>
-            <img style="display:none;width:100px;height:100px;" id="smallImage" src="" />
+            <img style="display:none;width:300px;height:300px;" id="smallImage" src="" />
         </div>
 
         <!-- NOM DU VIN -->
         <div class="input-field col s12">
-            <i class="mdi-communication-live-help prefix changedcolour"></i>
             <input type="text" name="nom" placeholder="Nom du vin" id="nom" class="validate">
             <label for="nom"></label>
         </div>
 
         <!-- DOMAINE DU VIN -->
         <div class="input-field col s12">
-            <i class="mdi-communication-live-help prefix changedcolour"></i>
             <input type="text" name="domaine" placeholder="Domaine de vin" id="domaine" class="validate">
             <label for="domaine"></label>
         </div>
 
         <!-- ANNEE DU VIN -->
         <div class="input-field col s12">
-            <i class="mdi-communication-live-help prefix changedcolour"></i>
             <input type="text" name="annee" placeholder="Année du vin" id="annee" class="validate">
             <label for="annee"></label>
         </div>
 
         <!-- TYPE DU VIN -->
         <div class="input-field col s12">
-            <i class="mdi-communication-live-help prefix changedcolour"></i>
             <input type="text" name="vintype" placeholder="Type du vin" id="vintype" class="validate">
             <label for="vintype"></label>
         </div>
 
         <!-- COMMENTAIRE DU VIN -->
         <div class="input-field col s12">
-            <i class="mdi-communication-email prefix changedcolour"></i>
             <textarea id="commentaire" class="materialize-textarea" placeholder="Commentaire" length="120"></textarea>
             <label for="commentaire"></label>
         </div>
 
         <!-- NOTE DU VIN -->
         <div class="input-field col s12">
-            <i class="mdi-communication-live-help prefix changedcolour"></i>
-            <input type="text" name="note" placeholder="Note du vin" id="note" class="validate">
+            <input type="text" name="note" placeholder="Note du vin sur 20" id="note" class="validate">
             <label for="note"></label>
         </div>
 
@@ -168,6 +167,8 @@
 
             navigator.camera.getPicture(cameraSuccess, cameraError, {
                 quality: 50,
+                targetWidth: 500,
+                targetHeight: 500,
                 destinationType: Camera.DestinationType.DATA_URL,
                 sourceType: Camera.PictureSourceType.CAMERA,
                 encodingType: Camera.EncodingType.JPEG,
@@ -195,6 +196,8 @@
 
             navigator.camera.getPicture(cameraSuccess, cameraError, {
                 quality: 50,
+                targetWidth: 500,
+                targetHeight: 500,
                 destinationType: Camera.DestinationType.DATA_URL,
                 sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
                 encodingType: Camera.EncodingType.JPEG,
