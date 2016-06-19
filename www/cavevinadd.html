@@ -33,9 +33,9 @@
     <nav class="teal lighten-2 navigation">
         <a href="home.html" class="brand-logo center"></a>
         <ul id="slide-out" class="side-nav">
-            <li><a href="home.html">Home</a></li>
+            <li><a href="home.html">Accueil</a></li>
             <li><a href="guide.html">Guide</a></li>
-            <li><a href="friends.html">Friends</a></li>
+            <li><a href="friends.html">Collaborateurs</a></li>
             <li class="no-padding">
                 <ul class="collapsible collapsible-accordion">
                     <li>
@@ -66,9 +66,9 @@
         </ul>
         <a href="home.html" class="brand-logo center"></a>
         <ul class="left hide-on-med-and-down">
-            <li><a href="home.html">Home</a></li>
+            <li><a href="home.html">Accueil</a></li>
             <li><a href="guide.html">Guide</a></li>
-            <li><a href="friends.html">Friends</a></li>
+            <li><a href="friends.html">Collaborateurs</a></li>
             <li><a class="dropdown-button" href="#!" data-activates="dropdown2">Vos fiches de vin<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
             <ul id='dropdown2' class='dropdown-content'>
                 <li><a href="fichevinadd.html">Ajouter une fiche de vin</a></li>
@@ -76,8 +76,8 @@
             </ul>
             <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Votre cave à vin<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
             <ul id='dropdown1' class='dropdown-content'>
-                <li><a href="fichevinadd.html">Ajouter des vins à votre cave</a></li>
-                <li><a href="fichevinshow.html">Consulter votre cave à vin</a></li>
+                <li><a href="cavevinadd.html">Ajouter des vins à votre cave</a></li>
+                <li><a href="cavevinshow.html">Consulter votre cave à vin</a></li>
             </ul>
             <li><a href="index.html">Sign out</a></li>
         </ul>
@@ -93,6 +93,9 @@
 <div class="row valign">
 
     <form action="" id="" class="col s12" method="POST">
+
+        <!-- AFFICHE LE RESULTAT DE LA REQUETE - DONC AU RETOUR DE LA CREATION DANS LA BASE DE DONNEES -->
+        <div id="result"></div>
 
         <!-- PHOTO DU VIN -->
         <div class="input-field col s6">
@@ -152,9 +155,6 @@
 
         <br>
 
-        <!-- AFFICHE LE RESULTAT DE LA REQUETE - DONC AU RETOUR DE LA CREATION DANS LA BASE DE DONNEES -->
-        <div id="result">
-        </div>
     </form>
 </div>
 
@@ -167,8 +167,8 @@
 
             navigator.camera.getPicture(cameraSuccess, cameraError, {
                 quality: 50,
-                targetWidth: 300,
-                targetHeight: 300,
+                targetWidth: 500,
+                targetHeight: 500,
                 destinationType: Camera.DestinationType.DATA_URL,
                 sourceType: Camera.PictureSourceType.CAMERA,
                 encodingType: Camera.EncodingType.JPEG,
@@ -255,7 +255,7 @@
                     if(data){
                         // Vérifie si on prend les bonnes valeurs du formulaire
                         console.log(data);
-                        $("#result").html("<p class='pheadtextindex center'>Votre cave à vin a bien été mise à jour</p> <p><a href='cavevinshow.html' class='waves-effect grey lighten-2 waves-light btn'> Consulter ma cave à vin !</a></p><p><a href='cavevinadd.html' class='waves-effect grey lighten-2 waves-light btn'> Ajouter un autre vin !</a></p>");
+                        $("#result").html("<p class='pheadtextindex center'>Votre cave à vin a bien été mise à jour</p> <p><a href='cavevinshow.html' class='btn'> Consulter ma cave à vin !</a></p><p><a href='cavevinadd.html' class='btn'> Ajouter un autre vin !</a></p>");
                         localStorage.removeItem("image-wine");
                     }else{
                         console.log(data);

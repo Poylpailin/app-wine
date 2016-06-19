@@ -33,9 +33,9 @@
     <nav class="teal lighten-2 navigation">
         <a href="home.html" class="brand-logo center"></a>
         <ul id="slide-out" class="side-nav">
-            <li><a href="home.html">Home</a></li>
+            <li><a href="home.html">Accueil</a></li>
             <li><a href="guide.html">Guide</a></li>
-            <li><a href="friends.html">Friends</a></li>
+            <li><a href="friends.html">Collaborateurs</a></li>
             <li class="no-padding">
                 <ul class="collapsible collapsible-accordion">
                     <li>
@@ -66,9 +66,9 @@
         </ul>
         <a href="home.html" class="brand-logo center"></a>
         <ul class="left hide-on-med-and-down">
-            <li><a href="home.html">Home</a></li>
+            <li><a href="home.html">Accueil</a></li>
             <li><a href="guide.html">Guide</a></li>
-            <li><a href="friends.html">Friends</a></li>
+            <li><a href="friends.html">Collaborateurs</a></li>
             <li><a class="dropdown-button" href="#!" data-activates="dropdown2">Vos fiches de vin<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
             <ul id='dropdown2' class='dropdown-content'>
                 <li><a href="fichevinadd.html">Ajouter une fiche de vin</a></li>
@@ -91,12 +91,7 @@
 <div class="container main_teal_panel">
 
     <div id="fiche_vin" class="h3headtextindex center"></div>
-
-    <script type="text/javascript">
-        var texte = "Fiches de vin de ";
-        var session_name = localStorage.getItem('username');
-        document.getElementById("fiche_vin").innerHTML = texte + session_name;
-    </script>
+    <br>
 
     <!-- Récupère tous les résultats de la requête pour afficher toutes les notes liées à l'utilisateur -->
     <div id="result" class="col s12"></div>
@@ -132,6 +127,7 @@
                                 "<p>" +val['domaine']+ " - " + val['annee'] + " - "+ val['vintype']+ "</p>" +
                                 "<p>" +val['commentaire']+ "<p>" +
                                 "<p>NOTATION : " + val['note'] + "</p>"+
+                                "<p>Par "+ val['user_username'] + "</p>"+
                                 "</div>");
                     });
 
