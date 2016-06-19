@@ -98,10 +98,10 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        $button_show_fichevinfriend = localStorage.getItem('button_show_cavevinfriend');
+        $button_show_cavevinfriend = localStorage.getItem('button_show_cavevinfriend');
 
         var data ={
-            button_show_fichevinfriend: $button_show_fichevinfriend
+            button_show_cavevinfriend: $button_show_cavevinfriend
         };
 
         $.ajax({
@@ -122,7 +122,7 @@
                                 "<span class='card-title'>" + val['nom'] + "</span>" +
                                 "<p>" +val['domaine']+ " - " + val['annee'] + " - "+ val['vintype']+ "</p>" +
                                 "<p>" +val['commentaire']+ "<p>" +
-                                "<p>NOTATION : " + val['note'] + "</p>"+
+                                "<p>QUANTITE : " + val['quantite'] + "</p>"+
                                 "</div>");
                     });
 
