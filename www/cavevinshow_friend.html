@@ -89,8 +89,8 @@
 </header>
 
 <div class="container main_teal_panel">
-
-    <!-- Récupère tous les résultats de la requête pour afficher toutes les notes liées à l'utilisateur -->
+    <br><a href='cavevinadd.html' class='btn'> Mettez à jour votre cave à vin!</a><br>
+    <!-- Récupère tous les résultats de la requête pour afficher la cave liée à l'utilisateur -->
     <div id="result" class="col s12"></div>
 
 </div>
@@ -106,6 +106,7 @@
 
         $.ajax({
             type: "POST",
+            data: data,
             url: "http://delphine-idiart.com/app-wine/php/cavevin_friend.php", //Fichier PHP pour la requête
 
             success: function (data) {
