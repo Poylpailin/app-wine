@@ -49,7 +49,7 @@
             <label for="password"></label>
         </div>
 
-        <button class="btn waves-effect waves-light" type="submit" id="submit" value="Connexion" name="action">Submit
+        <button class="btn waves-effect waves-light" type="submit" id="submit" value="Connexion" name="action">Connexion
             <i class="mdi-content-send right"></i>
         </button>
 
@@ -59,7 +59,7 @@
 <div class="container">
     <div class="card-panel teal lighten-2">
         <a href="sign_in.html">
-            <span class="white-text">Not register yet ? Create your account here.</span>
+            <span class="white-text">Créer votre compte !</span>
         </a>
     </div>
 </div>
@@ -96,7 +96,7 @@
                     var session_name = localStorage.getItem('username');
                     console.log(session_name);
 
-                    $("#home").html("<div class='card-panel teal lighten-2'><span class='white-text'>Successfully connected! Heading back to the home-page. Please wait...</span></div>");
+                    $("#home").html("<div class='card-panel teal lighten-2'><span class='white-text'>Connexion réussie ! Redirection...</span></div>");
 
                     window.setTimeout(function(){
                         window.location.href = "home.html";
@@ -108,7 +108,7 @@
             },
             error: function(statut) {
                 console.log(statut);
-                alert('Wrong username or/and password');
+                alert('Mauvais username et/ou password');
             }
 
         });
