@@ -182,3 +182,23 @@ height: 350px;
     color: #004c4c;
 }
 
+.card .card-action a{
+    color: #ffffff !important;;
+}
+
+.fond_carte{
+    background-color: #eeeeee;
+}
+
+.card-title{
+    background-color: #ec6868 !important;
+    color: #ffffff;
+}
+
+.card .btn-suppr{
+    background-color: #d1d1d1 !important;
+}
+
+#statut-card{
+    color: #000000;
+}
